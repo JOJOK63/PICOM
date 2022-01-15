@@ -11,7 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpKernel\Exception\LengthRequiredHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class RegisterType extends AbstractType
 {
@@ -20,36 +22,35 @@ class RegisterType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'Saisir votre email',
+                'constraints' => new Length(2, 60),
                 'attr' => [
                     'placeholder' => 'email'
                 ],
                 'required' => true,
             ])
-
             ->add('firstname', TextType::class, [
                 'label' => 'Saisir votre prénom',
+                'constraints' => new Length(2, 30),
                 'attr' => [
                     'placeholder' => 'prénom'
                 ],
                 'required' => true,
             ])
-
             ->add('lastname', TextType::class, [
                 'label' => 'Saisir votre nom',
+                'constraints' => new Length(2, 30),
                 'attr' => [
                     'placeholder' => 'nom'
                 ],
                 'required' => true,
             ])
-
             ->add('phone', TextType::class, [
                 'label' => 'Saisir votre numéro de téléphone',
                 'attr' => [
                     'placeholder' => 'numéro'
                 ],
-                   'required' => true,
+                'required' => true,
             ])
-
             ->add('password', PasswordType::class, [
                 'label' => 'Saisir votre mot de passe',
                 'attr' => [
@@ -57,7 +58,6 @@ class RegisterType extends AbstractType
                 ],
                 'required' => true,
             ])
-
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe doit correspondre.',
@@ -70,8 +70,10 @@ class RegisterType extends AbstractType
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmer mot de passe'],
             ])
-
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class,
+                [
+                    'label' => 'Valider',
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
