@@ -53,6 +53,7 @@ class RegisterController extends AbstractController
 // capture des données ensuite sauvegarde en base de données.
             $this->entityManager->persist($user);
             $this->entityManager->flush();
+
         }
 
 //création de la vue et passage de variable au template, pour y accéder dans la vue
@@ -60,5 +61,6 @@ class RegisterController extends AbstractController
 // création de la vue du form
             'form' => $form->createView()
         ]);
+
     }
 }
