@@ -19,10 +19,10 @@ class Broadcasting
     private $createdAt;
 
     #[ORM\Column(type: 'datetime')]
-    private $releaseDate;
+    private $broadcastStartDate;
 
     #[ORM\Column(type: 'datetime')]
-    private $releaseEndDate;
+    private $broadcastEndDate;
 
     #[ORM\ManyToMany(targetEntity: Advert::class, inversedBy: 'broadcastings')]
     private $adverts;
@@ -57,26 +57,26 @@ class Broadcasting
         return $this;
     }
 
-    public function getReleaseDate(): ?\DateTimeInterface
+    public function getBroadcastStartDate(): ?\DateTimeInterface
     {
-        return $this->releaseDate;
+        return $this->broadcastStartDate;
     }
 
-    public function setReleaseDate(\DateTimeInterface $releaseDate): self
+    public function setBroadcastStartDate(\DateTimeInterface $broadcastStartDate): self
     {
-        $this->releaseDate = $releaseDate;
+        $this->broadcastStartDate = $broadcastStartDate;
 
         return $this;
     }
 
-    public function getReleaseEndDate(): ?\DateTimeInterface
+    public function getBroadcastEndDate(): ?\DateTimeInterface
     {
-        return $this->releaseEndDate;
+        return $this->broadcastEndDate;
     }
 
-    public function setReleaseEndDate(\DateTimeInterface $releaseEndDate): self
+    public function setBroadcastEndDate(\DateTimeInterface $broadcastEndDate): self
     {
-        $this->releaseEndDate = $releaseEndDate;
+        $this->broadcastEndDate = $broadcastEndDate;
 
         return $this;
     }

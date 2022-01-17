@@ -8,10 +8,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AdvertRepository::class)]
-class Advert
+#[ORM\InheritanceType("JOINED")]
+abstract class Advert
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column(type: 'integer')]
     private $id;
 
@@ -27,10 +28,9 @@ class Advert
     #[ORM\Column(type: 'boolean')]
     private $isPaid;
 
-    public function __construct()
-    {
-        $this->broadcastings = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'adverts')]
+    private $user;
+
 
     public function getId(): ?int
     {
@@ -63,7 +63,7 @@ class Advert
 
 
     /**
-     * @return Collection|Broadcasting[]
+     * @return Collection
      */
     public function getBroadcastings(): Collection
     {
@@ -97,6 +97,18 @@ class Advert
     public function setIsPaid(bool $isPaid): self
     {
         $this->isPaid = $isPaid;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
