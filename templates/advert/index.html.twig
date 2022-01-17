@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}- Annonces{% endblock %}
+
+{% block body %}
+    <div class="adverts_list">
+    <h1> Listes des annonces</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-5">
+                <div>
+                    <div class="col-4">Nom de l'annonce</div>
+                    <div class="col-4">Date de création</div>
+                    <div class="col-4">auteur de l'annonce</div>
+                </div>
+                {% for advertText in advertsText %}
+                    <div>
+                        <div class="col-4">{{ advertText.advertName }}</div>
+                        <div class="col-4">{{ advertText.createdAt | date("d/m/Y") }}</div>
+                        <div class="col-4">nom du créateur</div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-5">
+                <div>
+                    <div class="col-4">Nom de l'annonce</div>
+                    <div class="col-4">Date de création</div>
+                    <div class="col-4">auteur de l'annonce</div>
+                </div>
+                {% for advertImage in advertsImage %}
+                    <div>
+                        <div class="col-4">{{ advertImage.advertName }}</div>
+                        <div class="col-4">{{ advertImage.createdAt | date("d/m/Y") }}</div>
+                        <div class="col-4">nom du créateur</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

@@ -8,18 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AdvertImageRepository::class)]
 class AdvertImage extends Advert
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'text', length: 500)]
     private $url;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getUrl(): ?string
     {

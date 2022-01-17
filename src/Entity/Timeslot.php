@@ -15,10 +15,10 @@ class Timeslot
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'time')]
+    #[ORM\Column(type: 'datetime')]
     private $timeslotStart;
 
-    #[ORM\Column(type: 'time')]
+    #[ORM\Column(type: 'datetime')]
     private $timeslotEnd;
 
     #[ORM\Column(type: 'float')]

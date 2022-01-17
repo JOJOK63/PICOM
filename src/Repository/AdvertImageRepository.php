@@ -19,6 +19,8 @@ class AdvertImageRepository extends ServiceEntityRepository
         parent::__construct($registry, AdvertImage::class);
     }
 
+
+
     // /**
     //  * @return AdvertImage[] Returns an array of AdvertImage objects
     //  */
