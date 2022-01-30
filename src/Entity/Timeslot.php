@@ -24,12 +24,16 @@ class Timeslot
     #[ORM\Column(type: 'float')]
     private $timeslotPrice;
 
-    #[ORM\ManyToMany(targetEntity: Broadcasting::class, inversedBy: 'timeslots')]
-    private $broadcastings;
+    #[ORM\ManyToMany(targetEntity: Area::class, mappedBy: 'timeslots')]
+    private $areas;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $advertLimit;
+
 
     public function __construct()
     {
-        $this->broadcastings = new ArrayCollection();
+        $this->areas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -74,25 +78,40 @@ class Timeslot
     }
 
     /**
-     * @return Collection|Broadcasting[]
+     * @return Collection|Area[]
      */
-    public function getBroadcastings(): Collection
+    public function getAreas(): Collection
     {
-        return $this->broadcastings;
+        return $this->areas;
     }
 
-    public function addBroadcasting(Broadcasting $broadcasting): self
+    public function addArea(Area $area): self
     {
-        if (!$this->broadcastings->contains($broadcasting)) {
-            $this->broadcastings[] = $broadcasting;
+        if (!$this->areas->contains($area)) {
+            $this->areas[] = $area;
+            $area->addTimeslot($this);
         }
 
         return $this;
     }
 
-    public function removeBroadcasting(Broadcasting $broadcasting): self
+    public function removeArea(Area $area): self
     {
-        $this->broadcastings->removeElement($broadcasting);
+        if ($this->areas->removeElement($area)) {
+            $area->removeTimeslot($this);
+        }
+
+        return $this;
+    }
+
+    public function getAdvertLimit(): ?int
+    {
+        return $this->advertLimit;
+    }
+
+    public function setAdvertLimit(?int $advertLimit): self
+    {
+        $this->advertLimit = $advertLimit;
 
         return $this;
     }

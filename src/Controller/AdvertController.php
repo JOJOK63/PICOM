@@ -5,17 +5,22 @@ namespace App\Controller;
 use App\Entity\Advert;
 use App\Entity\AdvertImage;
 use App\Entity\AdvertText;
+use App\Entity\User;
+use App\Form\NewAdvertTextFormType;
 use App\Repository\AdvertImageRepository;
 use App\Repository\AdvertRepository;
 use App\Repository\AdvertTextRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/annonces', name: 'adverts')]
 class AdvertController extends AbstractController
 {
+
     public function __construct(
         private EntityManagerInterface $em,
         private AdvertRepository $advertRepository,
@@ -36,7 +41,6 @@ class AdvertController extends AbstractController
 //        dd($adverts, $advertsImage, $advertsText);
 
         return $this->render('advert/index.html.twig', [
-            'controller_name' => 'AdvertController',
             'adverts' => $adverts,
             'advertsImage' => $advertsImage,
             'advertsText' => $advertsText
@@ -44,14 +48,32 @@ class AdvertController extends AbstractController
     }
 
     #[Route('/nouvelle-annonce-text', name: 'new_advert_text')]
-    public function newAdvertText(): Response
+    public function newAdvertText(Request $request,UserRepository $user): Response
     {
-        $this->em->persist((new AdvertText())
-            ->setContent('Foo')
-            ->setCreatedAt(new \DateTimeImmutable())
-            ->setAdvertName('foo')
-            ->setIsPaid(false)
-        );
+        $user = new User($this->getUser());
+
+        $advert = new AdvertText();
+        $form = $this->createForm(NewAdvertTextFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $advert->setUser($user);
+            $advert->setIsPaid(false);
+            $this->em->persist($advert);
+            $this->em->flush();
+
+            return $this->redirectToRoute('adverts');
+        }
+        return $this->render('advert/advert_text/new_advert_text.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/nouvelle-annonce-image', name: 'new_advert_image')]
+    public function newAdvertImage(): Response
+    {
+
         $this->em->persist((new AdvertImage())
             ->setUrl('foo')
             ->setCreatedAt(new \DateTimeImmutable())
