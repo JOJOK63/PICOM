@@ -8,35 +8,35 @@
     <div class="adverts_list">
         <div class="container">
             <div class="row">
-                <p>Liste des annonces texte</p>
-                <div class="col-5">
-                    <div>
-                        <div class="col-4">Nom de l'annonce</div>
-                        <div class="col-4">Date de création</div>
-                        <div class="col-4">auteur de l'annonce</div>
+                <div class="col-sm-6">
+                    <p>Liste des annonces texte</p>
+                    <div class="row">
+                        <div class="col-sm-4">Nom de l'annonce</div>
+                        <div class="col-sm-4">Date de création</div>
+                        <div class="col-sm-4">auteur de l'annonce</div>
                     </div>
 
                     {% for advertText in advertsText %}
-                        <div>
-                            <div class="col-4">{{ advertText.advertName }}</div>
-                            <div class="col-4">{{ advertText.createdAt | date("d/m/Y") }}</div>
-                            <div class="col-4">nom du créateur</div>
+                        <div class="row">
+                            <div class="col-sm-4">{{ advertText.advertName }}</div>
+                            <div class="col-sm-4">{{ advertText.createdAt | date("d/m/Y") }}</div>
+                            <div class="col-sm-4">nom du créateur</div>
                         </div>
                     {% endfor %}
                 </div>
 
-                <p>Liste des annonces image</p>
-                <div class="col-5">
-                    <div>
-                        <div class="col-4">Nom de l'annonce</div>
-                        <div class="col-4">Date de création</div>
-                        <div class="col-4">auteur de l'annonce</div>
+                <div class="col-sm-6">
+                    <p>Liste des annonces image</p>
+                    <div class="row">
+                        <div class="col-sm-4">Nom de l'annonce</div>
+                        <div class="col-sm-4">Date de création</div>
+                        <div class="col-sm-4">auteur de l'annonce</div>
                     </div>
                     {% for advertImage in advertsImage %}
-                        <div>
-                            <div class="col-4">{{ advertImage.advertName }}</div>
-                            <div class="col-4">{{ advertImage.createdAt | date("d/m/Y") }}</div>
-                            <div class="col-4">nom du créateur</div>
+                        <div class="row">
+                            <div class="col-sm-4">{{ advertImage.advertName }}</div>
+                            <div class="col-sm-4">{{ advertImage.createdAt | date("d/m/Y") }}</div>
+                            <div class="col-sm-4">nom du créateur</div>
                         </div>
                     {% endfor %}
                 </div>

@@ -27,10 +27,14 @@ class Area
     #[ORM\OneToMany(mappedBy: 'area', targetEntity: BusStop::class)]
     private $busStops;
 
+    #[ORM\ManyToMany(targetEntity: Timeslot::class, inversedBy: 'areas')]
+    private $timeslots;
+
     public function __construct()
     {
         $this->broadcastings = new ArrayCollection();
         $this->busStops = new ArrayCollection();
+        $this->timeslots = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +116,30 @@ class Area
                 $busStop->setArea(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Timeslot[]
+     */
+    public function getTimeslots(): Collection
+    {
+        return $this->timeslots;
+    }
+
+    public function addTimeslot(Timeslot $timeslot): self
+    {
+        if (!$this->timeslots->contains($timeslot)) {
+            $this->timeslots[] = $timeslot;
+        }
+
+        return $this;
+    }
+
+    public function removeTimeslot(Timeslot $timeslot): self
+    {
+        $this->timeslots->removeElement($timeslot);
 
         return $this;
     }

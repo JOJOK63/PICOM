@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TimeslotController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row text-center mt-3">
+            <div class="col-12">
+                <h1> liste des différents fuseaux horaires</h1>
+            </div>
+            <div class="col-12">
+                {% for timeslot in timeslots %}
+                    {{ timeslot.start |format_datetime(locale='fr')}}
+                    {{ timeslot.end |format_datetime(locale='fr')}}
+                    {{ timeslot.price }}
+                {% endfor %}
+            </div>
+
+
+
+        </div>
+    </div>
+{% endblock %}

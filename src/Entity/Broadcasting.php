@@ -15,9 +15,6 @@ class Broadcasting
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    private $createdAt;
-
     #[ORM\Column(type: 'datetime')]
     private $broadcastStartDate;
 
@@ -27,8 +24,6 @@ class Broadcasting
     #[ORM\ManyToMany(targetEntity: Advert::class, inversedBy: 'broadcastings')]
     private $adverts;
 
-    #[ORM\ManyToMany(targetEntity: Timeslot::class, mappedBy: 'broadcastings')]
-    private $timeslots;
 
     #[ORM\ManyToMany(targetEntity: Area::class, mappedBy: 'broadcastings')]
     private $areas;
@@ -36,25 +31,12 @@ class Broadcasting
     public function __construct()
     {
         $this->adverts = new ArrayCollection();
-        $this->timeslots = new ArrayCollection();
         $this->areas = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     public function getBroadcastStartDate(): ?\DateTimeInterface
@@ -101,33 +83,6 @@ class Broadcasting
     public function removeAdvert(Advert $advert): self
     {
         $this->adverts->removeElement($advert);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Timeslot[]
-     */
-    public function getTimeslots(): Collection
-    {
-        return $this->timeslots;
-    }
-
-    public function addTimeslot(Timeslot $timeslot): self
-    {
-        if (!$this->timeslots->contains($timeslot)) {
-            $this->timeslots[] = $timeslot;
-            $timeslot->addBroadcasting($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTimeslot(Timeslot $timeslot): self
-    {
-        if ($this->timeslots->removeElement($timeslot)) {
-            $timeslot->removeBroadcasting($this);
-        }
 
         return $this;
     }
