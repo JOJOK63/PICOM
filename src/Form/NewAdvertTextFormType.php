@@ -32,7 +32,7 @@ class NewAdvertTextFormType extends AbstractType
                 'label' => 'Contenu de l\'annonce',
                 'required' => true,
             ])
-            ->add('broadcastings')
+            ->add('broadcastings',BroadcastingFormType::class)
             ->add('submit');
     }
 

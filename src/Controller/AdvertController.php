@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/annonces', name: 'adverts')]
+#[Route('/annonces')]
 class AdvertController extends AbstractController
 {
 
@@ -30,7 +30,7 @@ class AdvertController extends AbstractController
     }
 
 
-    #[Route('/', name: 'adverts')]
+    #[Route('/', name: 'show_adverts')]
     public function index(): Response
     {
 
@@ -62,7 +62,7 @@ class AdvertController extends AbstractController
             $this->em->persist($advert);
             $this->em->flush();
 
-            return $this->redirectToRoute('adverts');
+            return $this->redirectToRoute('show_adverts');
         }
         return $this->render('advert/advert_text/new_advert_text.html.twig', [
             'form' => $form->createView(),

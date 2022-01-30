@@ -3,7 +3,33 @@
 {% block title %}- Mon compte{% endblock %}
 
 {% block body %}
-<h1>Mon compte</h1>
-    <p>Bienvenue {{ app.user.firstname}}.
-        C'est dans cet espace que vous allez pouvoir gérer vos informations personelles.</p>
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Mon compte</h1>
+            <p>Bienvenue {{ app.user.firstname }}.
+                C'est dans cet espace que vous allez pouvoir gérer vos informations personelles.</p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-6">
+                <div class="col-12">
+                <h2>Liste de vos annonces au format texte</h2>
+                <a href="{{ path('new_advert_text') }}"><button type="button" class="btn btn-light">Ajouter</button></a>
+                </div>
+                <div class="col-12">
+                    du contenie
+                </div>
+            </div>
+
+            <div class="col-6">
+                <h2>Liste de vos annonces au format image</h2>
+                <a href="{{ path('new_advert_text') }}"><button type="button" class="btn btn-light">Ajouter</button></a>
+            </div>
+
+        </div>
+
+    </div>
 {% endblock %}
