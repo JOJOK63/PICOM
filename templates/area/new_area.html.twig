@@ -1,16 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}- Nouveau créneau horaire{% endblock %}
+{% block title %}- Nouvelle zone{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="row">
-            <h1>Création d'un nouveau créneau horaire</h1>
+            <h1>Création d'une nouvelle zone</h1>
 
             {{ form_start(form) }}
-            {{ form_row(form.start) }}
-            {{ form_row(form.end) }}
-            {{ form_row(form.price) }}
+
             <div class="col-12 text-center">
                 {{ form_row(form.submit) }}
             </div>

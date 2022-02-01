@@ -6,6 +6,7 @@ use App\Repository\BroadcastingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: BroadcastingRepository::class)]
 class Broadcasting
@@ -13,63 +14,108 @@ class Broadcasting
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'datetime')]
-    private $broadcastStartDate;
+    private ?\DateTimeInterface $broadcastStartDate;
 
     #[ORM\Column(type: 'datetime')]
-    private $broadcastEndDate;
+    private ?\DateTimeInterface $broadcastEndDate;
 
     #[ORM\ManyToMany(targetEntity: Advert::class, inversedBy: 'broadcastings')]
-    private $adverts;
+    private ArrayCollection $adverts;
 
 
     #[ORM\ManyToMany(targetEntity: Area::class, mappedBy: 'broadcastings')]
-    private $areas;
+    private ArrayCollection $areas;
 
-    public function __construct()
+     public function __construct()
     {
         $this->adverts = new ArrayCollection();
         $this->areas = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getBroadcastStartDate(): ?\DateTimeInterface
     {
         return $this->broadcastStartDate;
     }
 
-    public function setBroadcastStartDate(\DateTimeInterface $broadcastStartDate): self
+    /**
+     * @param \DateTimeInterface|null $broadcastStartDate
+     */
+    public function setBroadcastStartDate(?\DateTimeInterface $broadcastStartDate): void
     {
         $this->broadcastStartDate = $broadcastStartDate;
-
-        return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getBroadcastEndDate(): ?\DateTimeInterface
     {
         return $this->broadcastEndDate;
     }
 
-    public function setBroadcastEndDate(\DateTimeInterface $broadcastEndDate): self
+    /**
+     * @param \DateTimeInterface|null $broadcastEndDate
+     */
+    public function setBroadcastEndDate(?\DateTimeInterface $broadcastEndDate): void
     {
         $this->broadcastEndDate = $broadcastEndDate;
-
-        return $this;
     }
 
     /**
-     * @return Collection|Advert[]
+     * @return ArrayCollection
      */
-    public function getAdverts(): Collection
+    public function getAdverts(): ArrayCollection
     {
         return $this->adverts;
     }
+
+    /**
+     * @param ArrayCollection $adverts
+     */
+    public function setAdverts(ArrayCollection $adverts): void
+    {
+        $this->adverts = $adverts;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAreas(): ArrayCollection
+    {
+        return $this->areas;
+    }
+
+    /**
+     * @param ArrayCollection $areas
+     */
+    public function setAreas(ArrayCollection $areas): void
+    {
+        $this->areas = $areas;
+    }
+
+
 
     public function addAdvert(Advert $advert): self
     {
@@ -85,14 +131,6 @@ class Broadcasting
         $this->adverts->removeElement($advert);
 
         return $this;
-    }
-
-    /**
-     * @return Collection|Area[]
-     */
-    public function getAreas(): Collection
-    {
-        return $this->areas;
     }
 
     public function addArea(Area $area): self

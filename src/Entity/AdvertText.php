@@ -10,17 +10,23 @@ class AdvertText extends Advert
 {
 
     #[ORM\Column(type: 'text', length: 500)]
-    private $content;
+    private ?string $content;
 
+    /**
+     * @return string|null
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    /**
+     * @param string|null $content
+     */
+    public function setContent(?string $content): void
     {
         $this->content = $content;
-
-        return $this;
     }
+
+
 }

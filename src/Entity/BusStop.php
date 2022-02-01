@@ -11,40 +11,59 @@ class BusStop
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    private ?string $name;
 
     #[ORM\ManyToOne(targetEntity: Area::class, inversedBy: 'busStops')]
-    private $area;
+    private ?Area $area;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
     {
         $this->name = $name;
-
-        return $this;
     }
 
+    /**
+     * @return Area|null
+     */
     public function getArea(): ?Area
     {
         return $this->area;
     }
 
-    public function setArea(?Area $area): self
+    /**
+     * @param Area|null $area
+     */
+    public function setArea(?Area $area): void
     {
         $this->area = $area;
-
-        return $this;
     }
 }

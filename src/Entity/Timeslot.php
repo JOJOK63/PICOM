@@ -3,8 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TimeslotRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TimeslotRepository::class)]
@@ -13,24 +13,24 @@ class Timeslot
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
 
     #[ORM\Column(type: 'time')]
-    private $start;
+    private ?DateTimeInterface $start;
 
     #[ORM\Column(type: 'time')]
-    private $end;
+    private ?DateTimeInterface $end;
 
 
     #[ORM\Column(type: 'float')]
-    private $price;
+    private ?float $price;
 
     #[ORM\ManyToMany(targetEntity: Area::class, mappedBy: 'timeslots')]
-    private $areas;
+    private ArrayCollection $areas;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    private $advertLimit;
+    private ?int $advertLimit;
 
 
     public function __construct()
@@ -38,30 +38,103 @@ class Timeslot
         $this->areas = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getStart(): ?DateTimeInterface
+    {
+        return $this->start;
+    }
+
+    /**
+     * @param DateTimeInterface|null $start
+     */
+    public function setStart(?DateTimeInterface $start): void
+    {
+        $this->start = $start;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getEnd(): ?DateTimeInterface
+    {
+        return $this->end;
+    }
+
+    /**
+     * @param DateTimeInterface|null $end
+     */
+    public function setEnd(?DateTimeInterface $end): void
+    {
+        $this->end = $end;
+    }
+
+    /**
+     * @return float|null
+     */
     public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(float $price): self
+    /**
+     * @param float|null $price
+     */
+    public function setPrice(?float $price): void
     {
         $this->price = $price;
-
-        return $this;
     }
 
     /**
-     * @return Collection|Area[]
+     * @return ArrayCollection
      */
-    public function getAreas(): Collection
+    public function getAreas(): ArrayCollection
     {
         return $this->areas;
     }
+
+    /**
+     * @param ArrayCollection $areas
+     */
+    public function setAreas(ArrayCollection $areas): void
+    {
+        $this->areas = $areas;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getAdvertLimit(): ?int
+    {
+        return $this->advertLimit;
+    }
+
+    /**
+     * @param int|null $advertLimit
+     */
+    public function setAdvertLimit(?int $advertLimit): void
+    {
+        $this->advertLimit = $advertLimit;
+    }
+
+
 
     public function addArea(Area $area): self
     {
@@ -82,39 +155,4 @@ class Timeslot
         return $this;
     }
 
-    public function getAdvertLimit(): ?int
-    {
-        return $this->advertLimit;
-    }
-
-    public function setAdvertLimit(?int $advertLimit): self
-    {
-        $this->advertLimit = $advertLimit;
-
-        return $this;
-    }
-
-    public function getStart(): ?\DateTimeInterface
-    {
-        return $this->start;
-    }
-
-    public function setStart(\DateTimeInterface $start): self
-    {
-        $this->start = $start;
-
-        return $this;
-    }
-
-    public function getEnd(): ?\DateTimeInterface
-    {
-        return $this->end;
-    }
-
-    public function setEnd(\DateTimeInterface $end): self
-    {
-        $this->end = $end;
-
-        return $this;
-    }
 }

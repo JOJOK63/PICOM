@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Timeslot;
 use App\Form\TimeslotFormType;
 use App\Repository\TimeslotRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

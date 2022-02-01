@@ -3,21 +3,32 @@
 {% block title %}Hello TimeslotController!{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row text-center mt-3">
+    <div class="container text-center">
+        <div class="row mt-3 mb-3">
             <div class="col-12">
                 <h1> liste des différents fuseaux horaires</h1>
             </div>
             <div class="col-12">
-                {% for timeslot in timeslots %}
-                    {{ timeslot.start |format_datetime(locale='fr')}}
-                    {{ timeslot.end |format_datetime(locale='fr')}}
-                    {{ timeslot.price }}
-                {% endfor %}
+                <a href="{{ path('new_timeslot') }}"><button type="button" class="btn btn-outline-success">Ajouter un fuseau horaire</button></a>
+            </div>
+            <div class="row">
+                <div class="col-4"> Heure de début</div>
+                <div class="col-4"> Heure de fin</div>
+                <div class="col-3"> Prix €</div>
+                <div class="col-1"> Gestion</div>
             </div>
 
-
-
+            <div class="row">
+                {% for timeslot in timeslots %}
+                    <div class="col-4"> {{ timeslot.start |date("h:i") }} </div>
+                    <div class="col-4"> {{ timeslot.end |date("h:i") }} </div>
+                    <div class="col-3"> {{ timeslot.price }} €</div>
+                    <div class="col-1">
+                        <a href=""><button type="button" class="btn btn-outline-success">Modifier</button></a>
+                        <a href=""><button type="button" class="btn btn-outline-success">Supprimer</button></a>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}
