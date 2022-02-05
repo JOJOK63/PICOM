@@ -67,7 +67,6 @@ class TimeslotController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($request->getUser());
             $this->em->flush();
             return $this->redirectToRoute('timeslots');
         }

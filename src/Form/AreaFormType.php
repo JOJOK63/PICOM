@@ -16,7 +16,7 @@ class AreaFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class,[
-                'label' => 'Nome de la zone ',
+                'label' => 'Nom de la zone ',
                 'required' => true,
 
             ])

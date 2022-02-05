@@ -2,8 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Area;
 use App\Entity\BusStop;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,8 +16,18 @@ class BusStopFormType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('area')
-        ;
+            ->add('area', EntityType::class , [
+                    'class' => Area::class,
+                    'choice_label' => 'name',
+                ]
+            )
+            ->add('submit', SubmitType::class, [
+                'label' => 'Enregistrer',
+                'attr' => [
+                    'class' => 'btn btn-block btn-danger',
+                ]
+            ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -13,23 +13,27 @@
                     <button type="button" class="btn btn-outline-danger">Ajouter une zone</button>
                 </a>
             </div>
-            <div class="row mt-3 mb-3 ">
-                <div class="col-4"> Nom de la zone</div>
-                <div class="col-4"> Tarif en euros</div>
-                <div class="col-4"> </div>
-            </div>
 
-
-            {% for area in areas %}
-                <div class="row mt-2 mb-2">
-                    <div class="col-4 "> {{ area.name }} </div>
-                    <div class="col-4"> {{ area.price }} €</div>
-                    <div class="col-4 edit">
-                        <a href="{{ path('edit_area',{ 'id' : area.id}) }}"><i class="far fa-edit"></i></a>
-                        <a href="{{ path('delete_area',{ 'id' : area.id}) }}"><i class="fa fa-trash"></i></a>
-                    </div>
+            {% if areas is not empty %}
+                <div class="row mt-3 mb-3 ">
+                    <div class="col-4"> Nom de la zone</div>
+                    <div class="col-4"> Tarif en euros</div>
+                    <div class="col-4"></div>
                 </div>
-            {% endfor %}
+
+
+                {% for area in areas %}
+                    <div class="row mt-2 mb-2">
+                        <div class="col-4 "> {{ area.name }} </div>
+                        <div class="col-4"> {{ area.price }} €</div>
+                        <div class="col-4 edit">
+                            <a href="{{ path('edit_area',{ 'id' : area.id}) }}"><i class="far fa-edit"></i></a>
+                            <a href="{{ path('delete_area',{ 'id' : area.id}) }}"><i class="fa fa-trash"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
         </div>
     </div>
 

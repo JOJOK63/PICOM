@@ -34,7 +34,7 @@ class AreaController extends AbstractController
         ]);
     }
 
-    #[Route('/nouvel-zone', name: 'new_area')]
+    #[Route('/nouvelle-zone', name: 'new_area')]
     public function newArea(Request $request): Response
     {
         $area = new Area();
