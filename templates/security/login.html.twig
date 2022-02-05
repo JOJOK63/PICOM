@@ -2,14 +2,15 @@
 
 {% block title %}- Connexion{% endblock %}
 
+{#{% block navbar %}#}
+{#    {{ include('components/_navbar.html.twig') }}#}
+{#{% endblock %}#}
+
 {% block body %}
     <form method="post">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
-        {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
-        {% endblock %}
         {% if app.user %}
             <div class="mb-3">
                 Vous êtes connecter en tant {{ app.user.firstname }} {{ app.user.lastname }}, <a

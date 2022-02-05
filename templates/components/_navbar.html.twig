@@ -1,27 +1,58 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <img src="{{asset('images/LOGO.png')}}" alt="logo picom" class="logo" style="width: 35px">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <img src="{{ asset('images/LOGO.png') }}" alt="logo picom" class="logo">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
 
-            {% if app.user %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('account') }}">Mon Compte</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('register') }}">Créer un Compte</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
-                </li>
-            {% endif %}
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('account') }}">Mon Compte</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('adverts') }}"> Annonces</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('timeslots') }}"> Diffusions </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('areas') }}"> Zones </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('stops') }}"> Arrêts </a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('timeslots') }}"> Plage Horaires </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href=""> Diffusions </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href=""> Commandes </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('register') }}">Créer un Compte</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                    </li>
+                {% endif %}
 
             </ul>
         </div>

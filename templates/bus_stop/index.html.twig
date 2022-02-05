@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BusStopController!{% endblock %}
+
+{% block body %}
+    <div class="timeslots">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mt-4 mb-4"> Liste des arrêts de bus</h1>
+            </div>
+            <div class="col-12 mt-4 mb-4">
+                <a href="{{ path('new_stop') }}">
+                    <button type="button" class="btn btn-outline-danger">Ajouter un arrêt</button>
+                </a>
+            </div>
+
+            {% if busStops is not empty %}
+
+                <div class="row mt-3 mb-3 ">
+                    <div class="col-4"> Nom de l'arrêt</div>
+                    <div class="col-4"> Zone lier</div>
+                    <div class="col-4"></div>
+                </div>
+
+
+                {% for busStop in busStops %}
+                    <div class="row mt-2 mb-2">
+                        <div class="col-4 "> {{ busStop.name }} </div>
+                        <div class="col-4"> {{ busStop.area.name }} </div>
+                        <div class="col-4 edit">
+                                                    <a href="{{ path('edit_stop',{ 'id' : busStop.id}) }}"><i class="far fa-edit"></i></a>
+                                                    <a href="{{ path('delete_stop',{ 'id' : busStop.id}) }}"><i class="fa fa-trash"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

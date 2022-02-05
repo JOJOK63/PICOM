@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}- arret{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            {% block viewTitle %}
+                <h1>Gestion de l'arret</h1>
+            {% endblock %}
+            {{ form_start(form) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.area) }}
+
+            <div class="col-12 text-center">
+                {{ form_row(form.submit) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+
+
+{% endblock %}

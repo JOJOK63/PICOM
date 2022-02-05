@@ -1,20 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AreaController!{% endblock %}
+{% block title %}- liste des zones {% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="areas">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mt-4 mb-4"> liste des différentes zones</h1>
+            </div>
+            <div class="col-12 mt-4 mb-4">
+                <a href="{{ path('new_area') }}">
+                    <button type="button" class="btn btn-outline-danger">Ajouter une zone</button>
+                </a>
+            </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            {% if areas is not empty %}
+                <div class="row mt-3 mb-3 ">
+                    <div class="col-4"> Nom de la zone</div>
+                    <div class="col-4"> Tarif en euros</div>
+                    <div class="col-4"></div>
+                </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/HB/Desktop/PICOM/PICOM/src/Controller/AreaController.php'|file_link(0) }}">src/Controller/AreaController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/HB/Desktop/PICOM/PICOM/templates/area/index.html.twig'|file_link(0) }}">templates/area/index.html.twig</a></code></li>
-    </ul>
-</div>
+
+                {% for area in areas %}
+                    <div class="row mt-2 mb-2">
+                        <div class="col-4 "> {{ area.name }} </div>
+                        <div class="col-4"> {{ area.price }} €</div>
+                        <div class="col-4 edit">
+                            <a href="{{ path('edit_area',{ 'id' : area.id}) }}"><i class="far fa-edit"></i></a>
+                            <a href="{{ path('delete_area',{ 'id' : area.id}) }}"><i class="fa fa-trash"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+        </div>
+    </div>
+
+
 {% endblock %}

@@ -10,17 +10,23 @@ class AdvertImage extends Advert
 {
 
     #[ORM\Column(type: 'text', length: 500)]
-    private $url;
+    private ?string $url;
 
+    /**
+     * @return string|null
+     */
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    public function setUrl(string $url): self
+    /**
+     * @param string|null $url
+     */
+    public function setUrl(?string $url): void
     {
         $this->url = $url;
-
-        return $this;
     }
+
+
 }

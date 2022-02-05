@@ -3,9 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AreaRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Entity(repositoryClass: AreaRepository::class)]
 class Area
@@ -13,65 +12,121 @@ class Area
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $nameArea;
+    private ?string $name;
 
     #[ORM\Column(type: 'float')]
-    private $priceArea;
+    private ?float $price;
 
     #[ORM\ManyToMany(targetEntity: Broadcasting::class, inversedBy: 'areas')]
-    private $broadcastings;
+    private PersistentCollection $broadcastings;
 
     #[ORM\OneToMany(mappedBy: 'area', targetEntity: BusStop::class)]
-    private $busStops;
+    private PersistentCollection $busStops;
 
     #[ORM\ManyToMany(targetEntity: Timeslot::class, inversedBy: 'areas')]
-    private $timeslots;
+    #[ORM\JoinColumn(nullable: true)]
+    private PersistentCollection $timeslots;
 
-    public function __construct()
-    {
-        $this->broadcastings = new ArrayCollection();
-        $this->busStops = new ArrayCollection();
-        $this->timeslots = new ArrayCollection();
-    }
+    #[ORM\Column(type: 'integer')]
+    private ?int $maxBusStop;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNameArea(): ?string
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
     {
-        return $this->nameArea;
-    }
-
-    public function setNameArea(string $nameArea): self
-    {
-        $this->nameArea = $nameArea;
-
-        return $this;
-    }
-
-    public function getPriceArea(): ?float
-    {
-        return $this->priceArea;
-    }
-
-    public function setPriceArea(float $priceArea): self
-    {
-        $this->priceArea = $priceArea;
-
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * @return Collection|Broadcasting[]
+     * @return string|null
      */
-    public function getBroadcastings(): Collection
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param float|null $price
+     */
+    public function setPrice(?float $price): void
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getBroadcastings(): PersistentCollection
     {
         return $this->broadcastings;
+    }
+
+    /**
+     * @param PersistentCollection $broadcastings
+     */
+    public function setBroadcastings(PersistentCollection $broadcastings): void
+    {
+        $this->broadcastings = $broadcastings;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getBusStops(): PersistentCollection
+    {
+        return $this->busStops;
+    }
+
+    /**
+     * @param PersistentCollection $busStops
+     */
+    public function setBusStops(PersistentCollection $busStops): void
+    {
+        $this->busStops = $busStops;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getTimeslots(): PersistentCollection
+    {
+        return $this->timeslots;
+    }
+
+    /**
+     * @param PersistentCollection $timeslots
+     */
+    public function setTimeslots(PersistentCollection $timeslots): void
+    {
+        $this->timeslots = $timeslots;
     }
 
     public function addBroadcasting(Broadcasting $broadcasting): self
@@ -90,13 +145,6 @@ class Area
         return $this;
     }
 
-    /**
-     * @return Collection|BusStop[]
-     */
-    public function getBusStops(): Collection
-    {
-        return $this->busStops;
-    }
 
     public function addBusStop(BusStop $busStop): self
     {
@@ -120,13 +168,6 @@ class Area
         return $this;
     }
 
-    /**
-     * @return Collection|Timeslot[]
-     */
-    public function getTimeslots(): Collection
-    {
-        return $this->timeslots;
-    }
 
     public function addTimeslot(Timeslot $timeslot): self
     {
@@ -140,6 +181,18 @@ class Area
     public function removeTimeslot(Timeslot $timeslot): self
     {
         $this->timeslots->removeElement($timeslot);
+
+        return $this;
+    }
+
+    public function getMaxBusStop(): ?int
+    {
+        return $this->maxBusStop;
+    }
+
+    public function setMaxBusStop(int $maxBusStop): self
+    {
+        $this->maxBusStop = $maxBusStop;
 
         return $this;
     }
