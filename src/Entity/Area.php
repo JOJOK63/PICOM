@@ -3,9 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AreaRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Entity(repositoryClass: AreaRepository::class)]
 class Area
@@ -22,24 +21,17 @@ class Area
     private ?float $price;
 
     #[ORM\ManyToMany(targetEntity: Broadcasting::class, inversedBy: 'areas')]
-    private ArrayCollection $broadcastings;
+    private PersistentCollection $broadcastings;
 
     #[ORM\OneToMany(mappedBy: 'area', targetEntity: BusStop::class)]
-    private ArrayCollection $busStops;
+    private PersistentCollection $busStops;
 
     #[ORM\ManyToMany(targetEntity: Timeslot::class, inversedBy: 'areas')]
     #[ORM\JoinColumn(nullable: true)]
-    private ArrayCollection $timeslots;
+    private PersistentCollection $timeslots;
 
     #[ORM\Column(type: 'integer')]
-    private $maxBusStop;
-
-    public function __construct()
-    {
-        $this->broadcastings = new ArrayCollection();
-        $this->busStops = new ArrayCollection();
-        $this->timeslots = new ArrayCollection();
-    }
+    private ?int $maxBusStop;
 
     /**
      * @return int|null
@@ -90,49 +82,49 @@ class Area
     }
 
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection
      */
-    public function getBroadcastings(): ArrayCollection
+    public function getBroadcastings(): PersistentCollection
     {
         return $this->broadcastings;
     }
 
     /**
-     * @param ArrayCollection $broadcastings
+     * @param PersistentCollection $broadcastings
      */
-    public function setBroadcastings(ArrayCollection $broadcastings): void
+    public function setBroadcastings(PersistentCollection $broadcastings): void
     {
         $this->broadcastings = $broadcastings;
     }
 
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection
      */
-    public function getBusStops(): ArrayCollection
+    public function getBusStops(): PersistentCollection
     {
         return $this->busStops;
     }
 
     /**
-     * @param ArrayCollection $busStops
+     * @param PersistentCollection $busStops
      */
-    public function setBusStops(ArrayCollection $busStops): void
+    public function setBusStops(PersistentCollection $busStops): void
     {
         $this->busStops = $busStops;
     }
 
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection
      */
-    public function getTimeslots(): ArrayCollection
+    public function getTimeslots(): PersistentCollection
     {
         return $this->timeslots;
     }
 
     /**
-     * @param ArrayCollection $timeslots
+     * @param PersistentCollection $timeslots
      */
-    public function setTimeslots(ArrayCollection $timeslots): void
+    public function setTimeslots(PersistentCollection $timeslots): void
     {
         $this->timeslots = $timeslots;
     }
@@ -198,7 +190,7 @@ class Area
         return $this->maxBusStop;
     }
 
-    public function setMaxBusStop(int $maxBusStop = 20): self
+    public function setMaxBusStop(int $maxBusStop): self
     {
         $this->maxBusStop = $maxBusStop;
 

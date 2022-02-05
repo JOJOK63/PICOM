@@ -23,7 +23,7 @@ class TimeslotController extends AbstractController
     {
     }
 
-    #[Route('/', name: 'show_timeslots')]
+    #[Route('/', name: 'timeslots')]
     public function index(): Response
     {
 
@@ -43,16 +43,53 @@ class TimeslotController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
             $timeslot->setAdvertLimit(6);
             $this->em->persist($timeslot);
             $this->em->flush();
 
-            return $this->redirectToRoute('show_timeslots');
+            return $this->redirectToRoute('timeslots');
         }
-        return $this->render('timeslot/new_timeslot.html.twig', [
+        return $this->render('timeslot/form_timeslot.html.twig', [
             'form' => $form->createView(),
-            'timeslot' => $timeslot
+            'timeslots' => $timeslot
         ]);
+    }
+
+    #[Route('/modifier-horaire/{id}', name: 'edit_timeslot')]
+    public function editTimeslot(Request $request): Response
+    {
+
+        $timeslot = $this->em->getRepository(Timeslot::class)->findOneBy(['id' => $request->get('id')]);
+
+        $form = $this->createForm(TimeslotFormType::class, $timeslot);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dd($request->getUser());
+            $this->em->flush();
+            return $this->redirectToRoute('timeslots');
+        }
+
+        return $this->render('timeslot/form_timeslot.html.twig', [
+            'form' => $form->createView()
+        ]);
+
+
+    }
+
+
+    #[Route('/supprimer-horaire/{id}', name: 'delete_timeslot')]
+    public function deleteTimeslot(Request $request,int $id)
+    {
+        $timeslot = $this->em->getRepository(Timeslot::class)->findOneBy(['id' => $request->get('id')]);
+
+        if( $timeslot->getId() == $id){
+            $this->em->remove($timeslot);
+            $this->em->flush();
+        }
+        return $this->redirectToRoute('timeslots');
     }
 
 

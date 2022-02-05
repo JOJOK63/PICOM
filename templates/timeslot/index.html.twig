@@ -3,32 +3,33 @@
 {% block title %}Hello TimeslotController!{% endblock %}
 
 {% block body %}
-    <div class="container text-center">
-        <div class="row mt-3 mb-3">
-            <div class="col-12">
-                <h1> liste des différents fuseaux horaires</h1>
-            </div>
-            <div class="col-12">
-                <a href="{{ path('new_timeslot') }}"><button type="button" class="btn btn-outline-success">Ajouter un fuseau horaire</button></a>
-            </div>
+        <div class="timeslots">
             <div class="row">
-                <div class="col-4"> Heure de début</div>
-                <div class="col-4"> Heure de fin</div>
-                <div class="col-3"> Prix €</div>
-                <div class="col-1"> Gestion</div>
-            </div>
+                <div class="col-12">
+                    <h1 class="mt-4 mb-4"> liste des différents fuseaux horaires</h1>
+                </div>
+                <div class="col-12 mt-4 mb-4">
+                    <a href="{{ path('new_timeslot') }}">
+                        <button type="button" class="btn btn-outline-danger">Ajouter un fuseau horaire</button>
+                    </a>
+                </div>
+                <div class="row mt-3 mb-3 ">
+                    <div class="col-4"> Créneaux</div>
+                    <div class="col-4"> Tarif en euros</div>
+                    <div class="col-4"> </div>
+                </div>
 
-            <div class="row">
+
                 {% for timeslot in timeslots %}
-                    <div class="col-4"> {{ timeslot.start |date("h:i") }} </div>
-                    <div class="col-4"> {{ timeslot.end |date("h:i") }} </div>
-                    <div class="col-3"> {{ timeslot.price }} €</div>
-                    <div class="col-1">
-                        <a href=""><button type="button" class="btn btn-outline-success">Modifier</button></a>
-                        <a href=""><button type="button" class="btn btn-outline-success">Supprimer</button></a>
+                    <div class="row mt-2 mb-2">
+                        <div class="col-4 "> {{ timeslot.start |date("H:i") }} - {{ timeslot.end |date("H:i") }} </div>
+                        <div class="col-4"> {{ timeslot.price }} €</div>
+                        <div class="col-4 edit">
+                            <a href="{{ path('edit_timeslot',{ 'id' : timeslot.id}) }}"><i class="far fa-edit"></i></a>
+                            <a href="{{ path('delete_timeslot',{ 'id' : timeslot.id}) }}"><i class="fa fa-trash"></i></a>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
-    </div>
 {% endblock %}

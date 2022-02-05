@@ -4,7 +4,9 @@ namespace App\Form;
 
 use App\Entity\Area;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,12 +15,22 @@ class AreaFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('price')
-            ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer',
+            ->add('name', TextType::class,[
+                'label' => 'Nome de la zone ',
+                'required' => true,
+
+            ])
+            ->add('price',MoneyType::class, [
+                'label' => 'Prix du créneau',
+                'required' => true,
                 'attr' => [
-                    'class' => 'btn btn-block btn-success',
+                    'placeholder' => 'Entrez son prix',
+                ]
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Valider',
+                'attr' => [
+                    'class' => 'btn btn-block btn-danger',
                 ]
             ]);
     }

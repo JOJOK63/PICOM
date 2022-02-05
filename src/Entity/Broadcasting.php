@@ -6,6 +6,7 @@ use App\Repository\BroadcastingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: BroadcastingRepository::class)]
@@ -23,17 +24,11 @@ class Broadcasting
     private ?\DateTimeInterface $broadcastEndDate;
 
     #[ORM\ManyToMany(targetEntity: Advert::class, inversedBy: 'broadcastings')]
-    private ArrayCollection $adverts;
+    private PersistentCollection $adverts;
 
 
     #[ORM\ManyToMany(targetEntity: Area::class, mappedBy: 'broadcastings')]
-    private ArrayCollection $areas;
-
-     public function __construct()
-    {
-        $this->adverts = new ArrayCollection();
-        $this->areas = new ArrayCollection();
-    }
+    private PersistentCollection $areas;
 
     /**
      * @return int|null
@@ -83,34 +78,38 @@ class Broadcasting
         $this->broadcastEndDate = $broadcastEndDate;
     }
 
+
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection
      */
-    public function getAdverts(): ArrayCollection
+    public function getAdverts(): PersistentCollection
     {
         return $this->adverts;
     }
 
+
     /**
-     * @param ArrayCollection $adverts
+     * @param PersistentCollection $adverts
+     * @return void
      */
-    public function setAdverts(ArrayCollection $adverts): void
+    public function setAdverts(PersistentCollection $adverts): void
     {
         $this->adverts = $adverts;
     }
 
+
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection
      */
-    public function getAreas(): ArrayCollection
+    public function getAreas(): PersistentCollection
     {
         return $this->areas;
     }
 
     /**
-     * @param ArrayCollection $areas
+     * @param PersistentCollection $areas
      */
-    public function setAreas(ArrayCollection $areas): void
+    public function setAreas(PersistentCollection $areas): void
     {
         $this->areas = $areas;
     }

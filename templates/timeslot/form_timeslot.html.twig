@@ -5,8 +5,9 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <h1>Création d'un nouveau créneau horaire</h1>
-
+            {% block viewTitle %}
+            <h1>Gestion du créneau horaire</h1>
+            {% endblock %}
             {{ form_start(form) }}
             {{ form_row(form.start) }}
             {{ form_row(form.end) }}

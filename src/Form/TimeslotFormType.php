@@ -34,7 +34,7 @@ class TimeslotFormType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => 'btn btn-block btn-success',
+                    'class' => 'btn btn-block btn-danger',
                 ]
             ]);
     }

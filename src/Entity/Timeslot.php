@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use App\Repository\TimeslotRepository;
 use DateTimeInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Entity(repositoryClass: TimeslotRepository::class)]
 class Timeslot
@@ -26,17 +26,11 @@ class Timeslot
     #[ORM\Column(type: 'float')]
     private ?float $price;
 
-    #[ORM\ManyToMany(targetEntity: Area::class, mappedBy: 'timeslots')]
-    private ArrayCollection $areas;
-
     #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $advertLimit;
 
-
-    public function __construct()
-    {
-        $this->areas = new ArrayCollection();
-    }
+    #[ORM\ManyToMany(targetEntity: Area::class, mappedBy: 'timeslots')]
+    private PersistentCollection $areas;
 
     /**
      * @return int|null
@@ -103,22 +97,6 @@ class Timeslot
     }
 
     /**
-     * @return ArrayCollection
-     */
-    public function getAreas(): ArrayCollection
-    {
-        return $this->areas;
-    }
-
-    /**
-     * @param ArrayCollection $areas
-     */
-    public function setAreas(ArrayCollection $areas): void
-    {
-        $this->areas = $areas;
-    }
-
-    /**
      * @return int|null
      */
     public function getAdvertLimit(): ?int
@@ -134,25 +112,15 @@ class Timeslot
         $this->advertLimit = $advertLimit;
     }
 
-
-
-    public function addArea(Area $area): self
+    public function getAreas(): PersistentCollection
     {
-        if (!$this->areas->contains($area)) {
-            $this->areas[] = $area;
-            $area->addTimeslot($this);
-        }
-
-        return $this;
+        return $this->areas;
     }
 
-    public function removeArea(Area $area): self
+    public function setAreas(PersistentCollection $areas): void
     {
-        if ($this->areas->removeElement($area)) {
-            $area->removeTimeslot($this);
-        }
-
-        return $this;
+        $this->areas = $areas;
     }
+
 
 }

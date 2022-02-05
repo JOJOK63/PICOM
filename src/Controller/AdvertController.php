@@ -30,7 +30,7 @@ class AdvertController extends AbstractController
     }
 
 
-    #[Route('/', name: 'show_adverts')]
+    #[Route('/', name: 'adverts')]
     public function index(): Response
     {
 
@@ -62,7 +62,7 @@ class AdvertController extends AbstractController
             $this->em->persist($advert);
             $this->em->flush();
 
-            return $this->redirectToRoute('show_adverts');
+            return $this->redirectToRoute('adverts');
         }
         return $this->render('advert/advert_text/new_advert_text.html.twig', [
             'form' => $form->createView(),
